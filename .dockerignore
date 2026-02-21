@@ -1,0 +1,16 @@
+# Avoid sending these to the build context
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.git/
+.github/
+*.md
+.env
+*.log
+openapi.yaml
+test/
+run.sh

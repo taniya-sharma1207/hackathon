@@ -65,6 +65,42 @@ docker compose up --build
 
 The API will be available at `http://localhost:5477`.
 
+### GitHub Container Registry (GHCR) – share the image
+
+The image is built and pushed to **GitHub Container Registry** on every push to `main` (or when you run the workflow manually).
+
+- **Image:** `ghcr.io/taniya-sharma1207/hackathon`
+- **Tags:** `main`, `latest`, and the commit SHA.
+
+**Anyone can run the shared image:**
+
+```bash
+# Pull and run (no login if the package is public)
+docker pull ghcr.io/taniya-sharma1207/hackathon:main
+docker run -d -p 5477:5477 ghcr.io/taniya-sharma1207/hackathon:main
+```
+
+Or use `:latest` or a specific SHA tag from the repo’s **Packages** or the Actions run.
+
+**If the package is private**, viewers need to log in first:
+
+```bash
+# Create a PAT with read:packages, then:
+echo $GITHUB_TOKEN | docker login ghcr.io -u YOUR_GITHUB_USERNAME --password-stdin
+docker pull ghcr.io/taniya-sharma1207/hackathon:main
+docker run -d -p 5477:5477 ghcr.io/taniya-sharma1207/hackathon:main
+```
+
+**Publish the image yourself (manual push):**
+
+```bash
+docker build -t ghcr.io/taniya-sharma1207/hackathon:latest .
+echo $GITHUB_TOKEN | docker login ghcr.io -u taniya-sharma1207 --password-stdin
+docker push ghcr.io/taniya-sharma1207/hackathon:latest
+```
+
+Replace `GITHUB_TOKEN` with a Personal Access Token with `write:packages` (and `read:packages` if you pull). To allow others to use the image without login, set the package to **Public** under repo **Settings → Packages → Package visibility** (or the package’s settings on GitHub).
+
 ## API Endpoints
 
 | Method | Endpoint | Description |
