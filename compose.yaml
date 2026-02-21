@@ -1,0 +1,11 @@
+# Docker Compose for the retirement auto-saving API.
+# No external services required; single service runs the API.
+# Run: docker compose up --build
+services:
+  api:
+    build: .
+    image: blk-hacking-ind-taniya-sharma
+    ports:
+      - "5477:5477"
+    environment:
+      - PORT=5477
